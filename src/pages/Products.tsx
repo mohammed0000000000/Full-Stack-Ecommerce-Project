@@ -4,10 +4,12 @@ import axiosInstance from "../config/axiosConfig";
 import { useQuery } from "@tanstack/react-query";
 
 const ProductsPage = () => {
-  // const getProductsList = async () => {
-  //   const { data} = axiosInstance.get(`${import.meta.env.STRAPI_SERVER_URL}`)
-  // }
-  // const { data, isLoading, error } = useQuery({ queryKey:["products"], queryFn:});
+  const getProductsList = async () => {
+      const {} = axiosInstance.get(
+        `${import.meta.env.STRAPI_SERVER_URL}/api/products?populate=thumbnail,categories`
+      );
+  };
+  const { data, isLoading, error } = useQuery({ queryKey:["products"], queryFn:});
 
   return (
     <Grid templateColumns="repeat(auto-fill, minmax(300px,1fr))" gap={4}>
