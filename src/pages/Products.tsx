@@ -1,24 +1,49 @@
 import { Grid } from "@chakra-ui/react";
 import ProductCard from "../components/ProductCard";
-import axiosInstance from "../config/axiosConfig";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { IProduct, IProductResponse } from "../interfaces";
+
+interface IResponseDate {
+  id: number;
+  attributes: IProduct;
+}
 
 const ProductsPage = () => {
   const getProductsList = async () => {
-      const {} = axiosInstance.get(
-        `${import.meta.env.STRAPI_SERVER_URL}/api/products?populate=thumbnail,categories`
-      );
+    const { data } = await axios.get(
+      `${
+        import.meta.env.VITE_STRAPI_SERVER_URL
+      }/api/products?populate=thumbnail,categories`
+    );
+    return data;
   };
-  const { data, isLoading, error } = useQuery({ queryKey:["products"], queryFn:});
+
+  const { isLoading, data, error } = useQuery({
+    queryKey: ["products"],
+    queryFn: () => getProductsList(),
+  });
+  // const temp = data?.data[0];
+  // console.log(temp.attributes.thumbnail.data.attributes.url);
+  // Render Products
+  const RenderProductsList = data?.data?.map((product: IProductResponse) => {
+    const {
+      id,
+      attributes: { title, price, description, thumbnail },
+    } = product;
+    // console.log(id, title, price, description, thumbnail);
+    const props: IProduct = {
+      title,
+      price,
+      description,
+      imageURL: thumbnail.data.attributes.formats.thumbnail.url,
+    };
+    return <ProductCard key={id} attributes={props} />;
+  });
 
   return (
     <Grid templateColumns="repeat(auto-fill, minmax(300px,1fr))" gap={4}>
-      <ProductCard
-        title="product 1"
-        price={450}
-        description="Lorem"
-        imageURL="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-      />
+      {RenderProductsList}
     </Grid>
   );
 };

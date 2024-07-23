@@ -6,20 +6,21 @@ import {
   Text,
   Button,
   CardBody,
-  useColorMode,
 } from "@chakra-ui/react";
 import { IProduct } from "../interfaces";
 import { Link } from "react-router-dom";
 
-const ProductCard = ({ title, description, imageURL, price }: IProduct) => {
-  const { colorMode } = useColorMode();
-  console.log(colorMode);
+interface IProps {
+  attributes: IProduct;
+}
+const ProductCard = ({ attributes }: IProps) => {
+  const { title, imageURL, price, description } = attributes;
   return (
     <>
       <Card border={"1px solid #a8b5c8"}>
         <CardBody>
           <Image
-            src={`${imageURL}`}
+            src={`${import.meta.env.VITE_STRAPI_SERVER_URL}${imageURL}`}
             alt="Green double couch with wooden legs"
             borderRadius="50%"
             width={200}
