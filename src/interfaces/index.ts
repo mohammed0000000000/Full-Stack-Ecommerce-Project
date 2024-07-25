@@ -1,8 +1,10 @@
 export interface IProduct {
+  id?: number | string;
   title: string;
   description: string;
   price: number;
   imageURL: string;
+  buttonText?: string;
 }
 interface Format {
   ext: string;

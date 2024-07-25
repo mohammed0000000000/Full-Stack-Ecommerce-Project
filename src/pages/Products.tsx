@@ -27,10 +27,12 @@ const ProductsPage = () => {
       attributes: { title, price, description, thumbnail },
     } = product;
     const props: IProduct = {
+      id,
       title,
       price,
       description,
       imageURL: thumbnail.data.attributes.formats.thumbnail.url,
+      buttonText: "View Details",
     };
     return <ProductCard key={id} attributes={props} />;
   });
@@ -42,7 +44,11 @@ const ProductsPage = () => {
     </>
   );
   return (
-    <Grid templateColumns="repeat(auto-fill, minmax(300px,1fr))" gap={4}>
+    <Grid
+      templateColumns="repeat(auto-fill, minmax(300px,1fr))"
+      gap={4}
+      margin={30}
+    >
       {isLoading ? RenderProductSkeleton : RenderProductsList}
     </Grid>
   );

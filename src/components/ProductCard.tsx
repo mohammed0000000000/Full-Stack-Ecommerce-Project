@@ -14,7 +14,7 @@ interface IProps {
   attributes: IProduct;
 }
 const ProductCard = ({ attributes }: IProps) => {
-  const { title, imageURL, price, description } = attributes;
+  const { id, title, imageURL, price, description, buttonText } = attributes;
   return (
     <>
       <Card border={"1px solid #a8b5c8"} backgroundColor={"transparent"}>
@@ -35,8 +35,10 @@ const ProductCard = ({ attributes }: IProps) => {
               color={""}
               fontSize={"20"}
               maxHeight={"6rem"}
-              overflowY={"clip"}
+              overflow={"hidden"}
+              textOverflow={"ellipsis"}
               textAlign={"center"}
+              letterSpacing={"1.5px"}
             >
               {description}
             </Text>
@@ -58,8 +60,9 @@ const ProductCard = ({ attributes }: IProps) => {
               color={"white"}
               fontWeight={"bold"}
               letterSpacing={"2px"}
+              to={`/product/${id}`}
             >
-              View Details
+              {buttonText}
             </Button>
           </Stack>
         </CardBody>
