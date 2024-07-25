@@ -17,7 +17,7 @@ const ProductCard = ({ attributes }: IProps) => {
   const { title, imageURL, price, description } = attributes;
   return (
     <>
-      <Card border={"1px solid #a8b5c8"}>
+      <Card border={"1px solid #a8b5c8"} backgroundColor={"transparent"}>
         <CardBody>
           <Image
             src={`${import.meta.env.VITE_STRAPI_SERVER_URL}${imageURL}`}
@@ -31,15 +31,26 @@ const ProductCard = ({ attributes }: IProps) => {
             <Heading size="md" textAlign={"center"}>
               {title}
             </Heading>
-            <Text color={""} fontSize={"20"}>
+            <Text
+              color={""}
+              fontSize={"20"}
+              maxHeight={"6rem"}
+              overflowY={"clip"}
+              textAlign={"center"}
+            >
               {description}
             </Text>
-            <Text color="blue.600" fontSize="2xl" fontWeight={"bold"}>
+            <Text
+              color="blue.600"
+              fontSize="2xl"
+              fontWeight={"bold"}
+              textAlign={"center"}
+            >
               ${price}
             </Text>
             <Button
               variant="solid"
-              colorScheme="blue"
+              backgroundColor={"#1da1f2"}
               mx={"auto"}
               width={"full"}
               as={Link}

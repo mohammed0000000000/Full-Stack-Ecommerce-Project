@@ -3,11 +3,7 @@ import ProductCard from "../components/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { IProduct, IProductResponse } from "../interfaces";
-
-interface IResponseDate {
-  id: number;
-  attributes: IProduct;
-}
+import ProductSkeleton from "../components/skeleteon/ProductSkeleton";
 
 const ProductsPage = () => {
   const getProductsList = async () => {
@@ -19,19 +15,17 @@ const ProductsPage = () => {
     return data;
   };
 
-  const { isLoading, data, error } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["products"],
     queryFn: () => getProductsList(),
   });
-  // const temp = data?.data[0];
-  // console.log(temp.attributes.thumbnail.data.attributes.url);
-  // Render Products
+
+  //              Render
   const RenderProductsList = data?.data?.map((product: IProductResponse) => {
     const {
       id,
       attributes: { title, price, description, thumbnail },
     } = product;
-    // console.log(id, title, price, description, thumbnail);
     const props: IProduct = {
       title,
       price,
@@ -40,10 +34,16 @@ const ProductsPage = () => {
     };
     return <ProductCard key={id} attributes={props} />;
   });
-
+  const RenderProductSkeleton = (
+    <>
+      {Array.from({ length: 20 }, (_, idx) => (
+        <ProductSkeleton key={idx} />
+      ))}
+    </>
+  );
   return (
     <Grid templateColumns="repeat(auto-fill, minmax(300px,1fr))" gap={4}>
-      {RenderProductsList}
+      {isLoading ? RenderProductSkeleton : RenderProductsList}
     </Grid>
   );
 };
