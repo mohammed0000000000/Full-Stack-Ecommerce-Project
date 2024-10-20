@@ -35,6 +35,7 @@ const ProductPage = () => {
     queryKey: ["product", `${id}`],
     queryFn: () => getProduct(),
   });
+
   useEffect(() => {
     document.title = `Products Store | Product ${data?.data?.attributes.title} page`;
   }, []);
@@ -79,6 +80,7 @@ const ProductPage = () => {
               width={"350px"}
               height={"350px"}
               mx={"auto"}
+              // fallbackSrc={}
             />
             <Stack mt="6" spacing="3">
               <Heading size="lg" as={"h1"} mx={"auto"} color={"blue.600"}>
@@ -113,17 +115,17 @@ const ProductPage = () => {
               py={"2rem"}
               _hover={{ backgroundColor: "#2b6cb0" }}
             >
-              Add to cart
+              Add To Cart
             </Button>
           </CardFooter>
         </Card>
       </>
     );
   };
-  const RenderProductSkeleton = <ProductSkeleton />;
+  const RenderProductSkeleton = (): ReactNode => <ProductSkeleton />;
   return (
     <Box maxW={"md"} mt={"105px"} mx={"auto"}>
-      {isLoading ? RenderProductSkeleton : RenderProduct()}
+      {isLoading ? RenderProductSkeleton() : RenderProduct()}
     </Box>
   );
 };
