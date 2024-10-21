@@ -15,12 +15,29 @@ import {
   InputGroup,
   Input,
   InputRightElement,
+  FormHelperText,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function SimpleCard() {
   const [showPassword, setShowPassword] = useState(false);
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
 
+  const [isEmail, setIsEmail] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!user.email) setIsEmail(true);
+    if (!user.password) setIsPassword(true);
+  };
   return (
     <Flex
       minH={"100vh"}
@@ -33,20 +50,41 @@ export default function SimpleCard() {
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
         </Stack>
         <Box
+          as={"form"}
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}
           boxShadow={"lg"}
           p={8}
+          onSubmit={submitHandler}
         >
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                type="email"
+                name={"email"}
+                value={user.email}
+                isInvalid={isEmail}
+                onChange={onChangeHandler}
+              />
+
+              {isEmail ? (
+                <FormHelperText color={"red.500"}>
+                  * Email is required.
+                </FormHelperText>
+              ) : null}
             </FormControl>
-            <FormControl id="password" isRequired>
+            <FormControl id="password">
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? "text" : "password"} />
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  value={user.password}
+                  name={"password"}
+                  isInvalid={isPassword}
+                  onChange={onChangeHandler}
+                />
+
                 <InputRightElement h={"full"}>
                   <Button
                     variant={"ghost"}
@@ -58,6 +96,11 @@ export default function SimpleCard() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              {isPassword ? (
+                <FormHelperText color={"red.500"}>
+                  * Password is required.
+                </FormHelperText>
+              ) : null}
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -69,10 +112,11 @@ export default function SimpleCard() {
                 <Text color={"blue.400"}>Forgot password?</Text>
               </Stack>
               <Button
-                bg={"blue.400"}
+                type={"submit"}
+                bg={isEmail || isPassword ? "red.500" : "blue.400"}
                 color={"white"}
                 _hover={{
-                  bg: "blue.500",
+                  bg: isEmail || isPassword ? "red.600" : "blue.600",
                 }}
               >
                 Sign in
