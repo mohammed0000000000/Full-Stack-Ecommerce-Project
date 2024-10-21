@@ -5,7 +5,6 @@ import {
   Flex,
   Avatar,
   HStack,
-  Text,
   IconButton,
   Button,
   Menu,
@@ -15,9 +14,10 @@ import {
   MenuDivider,
   useDisclosure,
   useColorModeValue,
+  useColorMode,
   Stack,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -46,6 +46,7 @@ const NavLink = ({ children }: Props) => {
 
 export default function Simple() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <>
@@ -72,7 +73,43 @@ export default function Simple() {
               ))}
             </HStack>
           </HStack>
-          <Flex alignItems={"center"}>
+
+          <Flex alignItems={"center"} gap={"2rem"}>
+            <Box>
+              <Button onClick={toggleColorMode}>
+                {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+              </Button>
+            </Box>
+            <Stack
+              flex={{ base: 1, md: 0 }}
+              justify={"flex-start"}
+              direction={"row"}
+              spacing={6}
+            >
+              <Button
+                as={Link}
+                fontSize={"sm"}
+                fontWeight={400}
+                variant={"link"}
+                to={"/login"}
+              >
+                Sign In
+              </Button>
+              <Button
+                as={Link}
+                to={"/register"}
+                display={{ base: "none", md: "inline-flex" }}
+                fontSize={"sm"}
+                fontWeight={600}
+                color={"white"}
+                bg={"pink.400"}
+                _hover={{
+                  bg: "pink.300",
+                }}
+              >
+                Sign Up
+              </Button>
+            </Stack>
             <Menu>
               <MenuButton
                 as={Button}
@@ -108,8 +145,6 @@ export default function Simple() {
           </Box>
         ) : null}
       </Box>
-
-      <Box p={4}>Main Content Here</Box>
     </>
   );
 }
