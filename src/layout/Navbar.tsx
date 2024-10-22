@@ -68,8 +68,8 @@ export default function Simple() {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <NavLink>{link}</NavLink>
+              {Links.map((link, idx: number) => (
+                <NavLink key={idx}>{link}</NavLink>
               ))}
             </HStack>
           </HStack>

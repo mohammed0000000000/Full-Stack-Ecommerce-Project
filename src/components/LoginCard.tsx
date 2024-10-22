@@ -16,27 +16,44 @@ import {
   Input,
   InputRightElement,
   FormHelperText,
+  Spinner,
 } from "@chakra-ui/react";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLogin, userLogin } from "../app/features/loginSlice";
+import { AppDispatch } from "../app/store";
 
 export default function SimpleCard() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { loading, data, error } = useSelector(selectLogin);
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
-    email: "",
+    identifier: "",
     password: "",
   });
 
-  const [isEmail, setIsEmail] = useState(false);
+  const [isIdentifier, setIsIdentifier] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
-  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!user.email) setIsEmail(true);
-    if (!user.password) setIsPassword(true);
+    console.log(user);
+    if (!user.identifier) {
+      setIsIdentifier(true);
+      return;
+    }
+    if (!user.password) {
+      setIsPassword(true);
+      return;
+    }
+    setIsIdentifier(false);
+    setIsPassword(false);
+    const res = await dispatch(userLogin(user));
+    console.log(res.payload);
   };
   return (
     <Flex
@@ -58,17 +75,17 @@ export default function SimpleCard() {
           onSubmit={submitHandler}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
+            <FormControl id="identifier">
               <FormLabel>Email address</FormLabel>
               <Input
                 type="email"
-                name={"email"}
-                value={user.email}
-                isInvalid={isEmail}
+                name={"identifier"}
+                value={user.identifier}
+                isInvalid={isIdentifier}
                 onChange={onChangeHandler}
               />
 
-              {isEmail ? (
+              {isIdentifier ? (
                 <FormHelperText color={"red.500"}>
                   * Email is required.
                 </FormHelperText>
@@ -113,11 +130,12 @@ export default function SimpleCard() {
               </Stack>
               <Button
                 type={"submit"}
-                bg={isEmail || isPassword ? "red.500" : "blue.400"}
+                bg={isIdentifier || isPassword ? "red.500" : "blue.400"}
                 color={"white"}
                 _hover={{
-                  bg: isEmail || isPassword ? "red.600" : "blue.600",
+                  bg: isIdentifier || isPassword ? "red.600" : "blue.600",
                 }}
+                isLoading={loading}
               >
                 Sign in
               </Button>
