@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { axiosInstance } from "../../api/axios.config";
 import { ILoginResponseFulfilled } from "../../interfaces/auth/loginReponseType";
+import { axiosInstance } from "../../api/axios.config";
 import { AxiosError } from "axios";
 import { ICustomAxiosError, transformAxiosError } from "../../helper/handleAxiosError";
 import { createStandaloneToast } from "@chakra-ui/react";
 
 const { toast } = createStandaloneToast();
+
 export interface IUserState {
   loading: boolean;
   data: ILoginResponseFulfilled | null;
@@ -18,52 +19,52 @@ const initialState: IUserState = {
   error: null /// Error => rejected
 }
 
-
-export const userLogin = createAsyncThunk<ILoginResponseFulfilled, { identifier: string; password: string }>
-  ("login/userLogin", async (credentials, thunkApi) => {
+export const userRegister = createAsyncThunk<ILoginResponseFulfilled, { username: string, email: string, password: string }>(
+  "/register/userRegister", async (credentials, thunkApi) => {
     const { rejectWithValue } = thunkApi;
     try {
-      const { data } = await axiosInstance.post<ILoginResponseFulfilled>("/api/auth/local", credentials);
+      const { data } = await axiosInstance.post<ILoginResponseFulfilled>("/api/auth/local/register", credentials);
       return data;
     }
     catch (error: any) {
+      console.log(error);
       const axiosError = error as AxiosError;
       const customError: ICustomAxiosError = transformAxiosError(axiosError);
       return rejectWithValue(customError); // Return the custom error object
     }
-  })
+  }
+)
 
-
-const loginSlice = createSlice({
-  initialState: initialState,
-  name: "login",
-  reducers: {}, // for action
+const registerSlice = createSlice({
+  name: 'register',
+  initialState,
+  reducers: {},
   extraReducers: (builder) => { // for middleware to handle request-response lifecycle
-    builder.addCase(userLogin.pending, (state) => {
+    builder.addCase(userRegister.pending, (state) => {
       state.loading = true;
-    }).addCase(userLogin.fulfilled, (state, action: PayloadAction<ILoginResponseFulfilled>) => {
+    }).addCase(userRegister.fulfilled, (state, action: PayloadAction<ILoginResponseFulfilled>) => {
       state.loading = false;
       state.data = action.payload;
       state.error = null;
       toast({
-        title: "Login Successfully",
+        title: "Register Successfully",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
-    }).addCase(userLogin.rejected, (state, action) => {
+    }).addCase(userRegister.rejected, (state, action) => {
       state.loading = false;
       state.data = null;
       state.error = action.payload as ICustomAxiosError;
       toast({
-        title: (action?.payload?.response?.data?.error?.message) ?? "InValid Login",
+        title: (action?.payload?.response?.data?.error?.message) ?? "InValid Register",
         status: "error",
         duration: 9000,
         isClosable: true,
       });
     })
   }
-});
+})
 
-export const selectLogin = (state: { login: IUserState }) => state.login;
-export default loginSlice.reducer;
+export const selectRegister = (state: { register: IUserState }) => state.register;
+export default registerSlice.reducer;

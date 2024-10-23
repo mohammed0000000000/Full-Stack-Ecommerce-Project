@@ -5,6 +5,7 @@ import ProductPage from "./pages/Product";
 import Navbar from "./layout/Navbar";
 import LoginCard from "./components/LoginCard";
 import RegisterCard from "./components/RegisterCard";
+// import { Toaster } from "@/components/ui/toaster";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/login" element={<LoginCard />} />
         <Route path="/register" element={<RegisterCard />} />
       </Routes>
+      {/* <Toaster /> Toaster for displaying notifications */}
     </>
   );
 };

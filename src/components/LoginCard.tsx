@@ -16,8 +16,8 @@ import {
   Input,
   InputRightElement,
   FormHelperText,
-  Spinner,
 } from "@chakra-ui/react";
+
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLogin, userLogin } from "../app/features/loginSlice";
@@ -25,7 +25,7 @@ import { AppDispatch } from "../app/store";
 
 export default function SimpleCard() {
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, data, error } = useSelector(selectLogin);
+  const { loading } = useSelector(selectLogin);
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
     identifier: "",
@@ -125,7 +125,7 @@ export default function SimpleCard() {
                 align={"start"}
                 justify={"space-between"}
               >
-                <Checkbox>Remember me</Checkbox>
+                <Checkbox visibility="hidden">Remember me</Checkbox>
                 <Text color={"blue.400"}>Forgot password?</Text>
               </Stack>
               <Button

@@ -5,6 +5,7 @@ export interface ICustomAxiosError {
   message: string; // General error message
   status?: number; // HTTP status code (optional)
   response?: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data?: any; // The data returned from the server
     status?: number; // Status code of the response
     statusText?: string; // HTTP status text
