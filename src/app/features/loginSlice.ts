@@ -4,6 +4,8 @@ import { ILoginResponseFulfilled } from "../../interfaces/auth/loginReponseType"
 import { AxiosError } from "axios";
 import { ICustomAxiosError, transformAxiosError } from "../../helper/handleAxiosError";
 import { createStandaloneToast } from "@chakra-ui/react";
+import CookieService from "../../services/cookieservices";
+import { redirect } from "react-router-dom";
 
 const { toast } = createStandaloneToast();
 export interface IUserState {
@@ -45,12 +47,22 @@ const loginSlice = createSlice({
       state.loading = false;
       state.data = action.payload;
       state.error = null;
+      const date = new Date();
+      date.setTime(date.getTime() + 1000 * 60 * 60 * 24 * 3);
+      const options = {
+        path: "/",
+        expires: date,
+      }
+      CookieService.set("jwt", action.payload.jwt, options)
       toast({
         title: "Login Successfully",
         status: "success",
         duration: 9000,
         isClosable: true,
       });
+      setTimeout(() => {
+        redirect("/");
+      }, 2000);
     }).addCase(userLogin.rejected, (state, action) => {
       state.loading = false;
       state.data = null;

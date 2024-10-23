@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectLogin, userLogin } from "../app/features/loginSlice";
 import { AppDispatch } from "../app/store";
 
-export default function SimpleCard() {
+export default function LoginPage() {
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector(selectLogin);
   const [showPassword, setShowPassword] = useState(false);
@@ -52,8 +52,7 @@ export default function SimpleCard() {
     }
     setIsIdentifier(false);
     setIsPassword(false);
-    const res = await dispatch(userLogin(user));
-    console.log(res.payload);
+    await dispatch(userLogin(user));
   };
   return (
     <Flex

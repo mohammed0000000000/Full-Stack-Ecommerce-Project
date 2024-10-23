@@ -23,9 +23,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../app/store";
 import { selectRegister, userRegister } from "../app/features/registerSlice";
 
-export default function SignupCard() {
+export default function RegisterPage() {
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, data } = useSelector(selectRegister);
+  const { loading } = useSelector(selectRegister);
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({
     firstName: "",
