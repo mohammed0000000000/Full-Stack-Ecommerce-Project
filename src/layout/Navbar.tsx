@@ -20,6 +20,8 @@ import {
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import cookieservices from "../services/cookieservices";
+import { useSelector } from "react-redux";
+import { selectCart } from "../app/features/cartSlice";
 
 interface Props {
   children: string;
@@ -48,11 +50,13 @@ const NavLink = ({ children }: Props) => {
 export default function Simple() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const count = useSelector(selectCart);
+
   const token: boolean = cookieservices.get("jwt") ? true : false;
 
   const LogoutClick = () => {
     cookieservices.remove("jwt");
-    documment;
+    window.location.reload();
   };
   return (
     <>
@@ -122,6 +126,7 @@ export default function Simple() {
               </>
             ) : (
               <>
+                <Box>Cart({count})</Box>
                 <Menu>
                   <MenuButton
                     as={Button}

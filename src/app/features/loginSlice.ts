@@ -6,7 +6,6 @@ import { ICustomAxiosError, transformAxiosError } from "../../helper/handleAxios
 import { createStandaloneToast } from "@chakra-ui/react";
 import CookieService from "../../services/cookieservices";
 import { redirect } from "react-router-dom";
-
 const { toast } = createStandaloneToast();
 export interface IUserState {
   loading: boolean;
@@ -35,7 +34,6 @@ export const userLogin = createAsyncThunk<ILoginResponseFulfilled, { identifier:
     }
   })
 
-
 const loginSlice = createSlice({
   initialState: initialState,
   name: "login",
@@ -60,9 +58,6 @@ const loginSlice = createSlice({
         duration: 9000,
         isClosable: true,
       });
-      setTimeout(() => {
-        redirect("/");
-      }, 2000);
     }).addCase(userLogin.rejected, (state, action) => {
       state.loading = false;
       state.data = null;

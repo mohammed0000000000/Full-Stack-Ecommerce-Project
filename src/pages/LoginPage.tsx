@@ -22,6 +22,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLogin, userLogin } from "../app/features/loginSlice";
 import { AppDispatch } from "../app/store";
+import { redirect } from "react-router-dom";
 
 export default function LoginPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -53,6 +54,7 @@ export default function LoginPage() {
     setIsIdentifier(false);
     setIsPassword(false);
     await dispatch(userLogin(user));
+    location.replace("/");
   };
   return (
     <Flex

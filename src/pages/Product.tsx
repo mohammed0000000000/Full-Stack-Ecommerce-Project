@@ -18,11 +18,14 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { ArrowLeftIcon } from "@chakra-ui/icons";
+import { AppDispatch } from "../app/store";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../app/features/cartSlice";
 
 const ProductPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch<AppDispatch>();
   const getProduct = async () => {
     const { data } = await axios.get(
       `${
@@ -35,7 +38,9 @@ const ProductPage = () => {
     queryKey: ["product", `${id}`],
     queryFn: () => getProduct(),
   });
-
+  const AddToCart = () => {
+    dispatch(addToCart(id as string));
+  };
   useEffect(() => {
     document.title = `Products Store | Product ${data?.data?.attributes.title} page`;
   }, []);
@@ -114,6 +119,7 @@ const ProductPage = () => {
               width={"100%"}
               py={"2rem"}
               _hover={{ backgroundColor: "#2b6cb0" }}
+              onClick={AddToCart}
             >
               Add To Cart
             </Button>

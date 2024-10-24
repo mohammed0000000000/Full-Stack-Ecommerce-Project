@@ -6,6 +6,7 @@ export interface IProduct {
   imageURL: string;
   buttonText?: string;
 }
+
 interface Format {
   ext: string;
   hash: string;
