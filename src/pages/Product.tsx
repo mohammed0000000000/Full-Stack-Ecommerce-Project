@@ -39,7 +39,11 @@ const ProductPage = () => {
     queryFn: () => getProduct(),
   });
   const AddToCart = () => {
-    dispatch(addToCart(id as string));
+    const {
+      id,
+      attributes: { title, price },
+    }: IProductResponse = data.data;
+    dispatch(addToCart({ id, title, price, quantity: 0 }));
   };
   useEffect(() => {
     document.title = `Products Store | Product ${data?.data?.attributes.title} page`;

@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store';
+import { IProductItem } from '../../interfaces';
+import { addItemToShoppingCart } from '../../utils';
 
 export interface IInitialState {
-  products: Array<number | string>,
+  products: Array<IProductItem>,
   count: number;
 }
 const initialState: IInitialState = {
@@ -15,9 +17,10 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart(state, action: PayloadAction<number | string>) {
-      state.products = [...state.products, action.payload]
-      state.count = state.count + 1
+    addToCart(state, action: PayloadAction<IProductItem>) {
+      state.products = addItemToShoppingCart(action.payload, state.products);
+      console.log(state.products.length);
+      state.count = state.products.length
     }
   }
 })

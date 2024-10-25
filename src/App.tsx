@@ -2,12 +2,14 @@
 
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
+import CartDrawer from "./components/CartDrawer";
 
 const App = () => {
   return (
     <>
       <main>
         <RouterProvider router={router}></RouterProvider>
+        <CartDrawer></CartDrawer>
       </main>
     </>
   );

@@ -20,8 +20,10 @@ import {
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import cookieservices from "../services/cookieservices";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCart } from "../app/features/cartSlice";
+import { onOpenCartDrawerAction } from "../app/features/globalSlice";
+import { AppDispatch } from "../app/store";
 
 interface Props {
   children: string;
@@ -58,6 +60,9 @@ export default function Simple() {
     cookieservices.remove("jwt");
     window.location.reload();
   };
+  const dispatch = useDispatch<AppDispatch>();
+  const onOpenCart = () => dispatch(onOpenCartDrawerAction());
+
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -126,7 +131,9 @@ export default function Simple() {
               </>
             ) : (
               <>
-                <Box>Cart({count})</Box>
+                <Box>
+                  <Button onClick={() => onOpenCart()}>Cart({count})</Button>
+                </Box>
                 <Menu>
                   <MenuButton
                     as={Button}

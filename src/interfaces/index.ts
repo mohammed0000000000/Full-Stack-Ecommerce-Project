@@ -6,7 +6,12 @@ export interface IProduct {
   imageURL: string;
   buttonText?: string;
 }
-
+export interface IProductItem {
+  id: number | string;
+  title: string;
+  price: number;
+  quantity: number
+}
 interface Format {
   ext: string;
   hash: string;
