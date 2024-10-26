@@ -1,5 +1,7 @@
 import { Button, Divider, Flex, Image, Stack, Text } from "@chakra-ui/react";
 import { IThumbnail } from "../interfaces";
+import { useDispatch } from "react-redux";
+import { decreaseQuantity, removeFromCart } from "../app/features/cartSlice";
 interface IProp {
   id: number;
   title: string;
@@ -7,8 +9,14 @@ interface IProp {
   quantity: number;
   thumbnail: IThumbnail;
 }
-const CartDrawerItem = ({ thumbnail, title, price, quantity }: IProp) => {
-  console.log(thumbnail);
+const CartDrawerItem = ({ id, thumbnail, title, price, quantity }: IProp) => {
+  const dispatch = useDispatch();
+  const removeOneHandler = () => {
+    dispatch(decreaseQuantity({ id, thumbnail, title, price, quantity }));
+  };
+  const removeAllHandler = () => {
+    dispatch(removeFromCart({ id, thumbnail, title, price, quantity }));
+  };
   return (
     <>
       <Flex alignItems={"center"} justifyContent={"space-between"} mb={".5rem"}>
@@ -29,10 +37,22 @@ const CartDrawerItem = ({ thumbnail, title, price, quantity }: IProp) => {
           <Text fontSize={"sm"}>Quantity: {quantity} </Text>
         </Stack>
         <Flex flexDirection={"column"} gap={"1rem"}>
-          <Button variant="outline" colorScheme="red" size="xs" w="fit-content">
+          <Button
+            variant="outline"
+            colorScheme="red"
+            size="xs"
+            w="fit-content"
+            onClick={removeOneHandler}
+          >
             Remove One
           </Button>
-          <Button variant="solid" colorScheme="red" size="xs" w="fit-content">
+          <Button
+            variant="solid"
+            colorScheme="red"
+            size="xs"
+            w="fit-content"
+            onClick={removeAllHandler}
+          >
             Remove All
           </Button>
         </Flex>

@@ -15,7 +15,7 @@ import {
   selectGlobal,
 } from "../app/features/globalSlice";
 import { AppDispatch } from "../app/store";
-import { selectCartItems } from "../app/features/cartSlice";
+import { clearCart, selectCartItems } from "../app/features/cartSlice";
 import { IProductItem } from "../interfaces";
 import CartDrawerItem from "./CartDrawerItem";
 function CartDrawer() {
@@ -25,6 +25,9 @@ function CartDrawer() {
   const btnRef = useRef(null);
   const dispatch = useDispatch<AppDispatch>();
   const onClose = () => dispatch(onCloseCartDrawerAction());
+  const clearHandler = () => {
+    dispatch(clearCart());
+  };
   return (
     <>
       <Drawer
@@ -49,7 +52,7 @@ function CartDrawer() {
             <Button
               variant="outline"
               mr={3}
-              onClick={() => {}}
+              onClick={clearHandler}
               colorScheme="red"
             >
               Clear All
