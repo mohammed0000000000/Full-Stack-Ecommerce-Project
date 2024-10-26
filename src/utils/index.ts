@@ -4,8 +4,6 @@ import { IProductItem } from '../interfaces';
 const { toast } = createStandaloneToast();
 
 export const addItemToShoppingCart = (product: IProductItem, shoppingCartItems: Array<IProductItem>): Array<IProductItem> => {
-  console.log(product);
-  console.log(shoppingCartItems);
   const existsItem = shoppingCartItems.find(item => item.id == product.id);
   if (existsItem) {
     toast({

@@ -15,14 +15,16 @@ import {
   selectGlobal,
 } from "../app/features/globalSlice";
 import { AppDispatch } from "../app/store";
-
+import { selectCartItems } from "../app/features/cartSlice";
+import { IProductItem } from "../interfaces";
+import CartDrawerItem from "./CartDrawerItem";
 function CartDrawer() {
   const { isOpenCartDrawer } = useSelector(selectGlobal);
+  const cartItems: Array<IProductItem> = useSelector(selectCartItems);
+  console.log(cartItems);
   const btnRef = useRef(null);
   const dispatch = useDispatch<AppDispatch>();
-
   const onClose = () => dispatch(onCloseCartDrawerAction());
-
   return (
     <>
       <Drawer
@@ -37,12 +39,12 @@ function CartDrawer() {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Your Shopping Cart</DrawerHeader>
-
           <DrawerBody>
-            {/* <Input placeholder="Type here..." /> */}
-            Lorem
+            {cartItems.map((item) => {
+              // console.log(item);
+              return <CartDrawerItem key={item.id} {...item} />;
+            })}
           </DrawerBody>
-
           <DrawerFooter>
             <Button
               variant="outline"

@@ -3,16 +3,27 @@ import loginSlice from "./features/loginSlice";
 import registerSlice from './features/registerSlice';
 import cartSlice from "./features/cartSlice";
 import globalSlice from "./features/globalSlice";
+import { persistStore, persistReducer } from "redux-persist";
+
+import storage from "redux-persist/lib/storage";
 
 
+const persistCartConfiguration = {
+  key: "cart",
+  storage,
+
+}
+const persistedCart = persistReducer(persistCartConfiguration, cartSlice);
 export const store = configureStore({
   reducer: {
-    cart: cartSlice,
+    cart: persistedCart,
     login: loginSlice,
     register: registerSlice,
     global: globalSlice,
   }
 })
+
+export const persister = persistStore(store);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

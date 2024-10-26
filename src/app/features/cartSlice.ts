@@ -3,7 +3,6 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store';
 import { IProductItem } from '../../interfaces';
 import { addItemToShoppingCart } from '../../utils';
-
 export interface IInitialState {
   products: Array<IProductItem>,
   count: number;
@@ -19,11 +18,11 @@ const cartSlice = createSlice({
   reducers: {
     addToCart(state, action: PayloadAction<IProductItem>) {
       state.products = addItemToShoppingCart(action.payload, state.products);
-      console.log(state.products.length);
       state.count = state.products.length
     }
   }
 })
 export const selectCart = (state: RootState) => state.cart.count;
+export const selectCartItems = (state: RootState) => state.cart.products;
 export const { addToCart } = cartSlice.actions;
 export default cartSlice.reducer;

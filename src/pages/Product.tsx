@@ -41,9 +41,12 @@ const ProductPage = () => {
   const AddToCart = () => {
     const {
       id,
-      attributes: { title, price },
+      attributes: { title, price, thumbnail },
     }: IProductResponse = data.data;
-    dispatch(addToCart({ id, title, price, quantity: 0 }));
+    console.log(thumbnail);
+    dispatch(
+      addToCart({ id, title, price, quantity: 0, thumbnail: thumbnail })
+    );
   };
   useEffect(() => {
     document.title = `Products Store | Product ${data?.data?.attributes.title} page`;

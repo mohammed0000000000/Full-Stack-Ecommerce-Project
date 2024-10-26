@@ -7,10 +7,11 @@ export interface IProduct {
   buttonText?: string;
 }
 export interface IProductItem {
-  id: number | string;
+  id: number;
   title: string;
   price: number;
-  quantity: number
+  quantity: number,
+  thumbnail: IThumbnail
 }
 interface Format {
   ext: string;
@@ -51,22 +52,22 @@ interface ThumbnailAttributes {
   provider_metadata: unknown;
   updatedAt: string;
 }
-interface CategoriesAttributes {
+export interface CategoriesAttributes {
   id: number;
   attributes?: unknown; // Replace `any` with the actual type of category attributes if known
 }
 
-interface CategoriesData {
+export interface CategoriesData {
   data: CategoriesAttributes[];
 }
-interface IData {
+export interface IData {
   attributes: ThumbnailAttributes,
   id: number;
 }
-interface IThumbnail {
+export interface IThumbnail {
   data: IData,
 }
-interface Attributes {
+export interface Attributes {
   categories: CategoriesData;
   createdAt: string;
   description: string;
