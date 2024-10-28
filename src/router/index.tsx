@@ -11,8 +11,10 @@ import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import ProductPage from "../pages/Product";
 import ProductsPage from "../pages/Products";
+import DashboardLayout from "../pages/dashboard/DashboardLayout";
 
 const token = cookieservices.get("jwt");
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -24,53 +26,59 @@ const router = createBrowserRouter(
             <ProtectedRoute
               isAuthenticated={token ? true : false}
               redirectPath={"/login"}
-              children={<HomePage></HomePage>}
+              children={<HomePage />}
             />
           }
-        ></Route>
+        />
         <Route
-          path="/products"
+          path="products"
           element={
             <ProtectedRoute
               isAuthenticated={token ? true : false}
               redirectPath={"/login"}
-              children={<ProductsPage></ProductsPage>}
+              children={<ProductsPage />}
             />
           }
-        ></Route>
+        />
         <Route
-          path="/product/:id"
+          path="product/:id"
           element={
             <ProtectedRoute
               isAuthenticated={token ? true : false}
               redirectPath={"/login"}
-              children={<ProductPage></ProductPage>}
+              children={<ProductPage />}
             />
           }
-        ></Route>
+        />
+        {/* Auth */}
         <Route
           path="/login"
           element={
             <ProtectedRoute
               isAuthenticated={token ? false : true}
               redirectPath={"/"}
-              children={<LoginPage></LoginPage>}
+              children={<LoginPage />}
             />
           }
-        ></Route>
+        />
         <Route
           path="/register"
           element={
             <ProtectedRoute
               isAuthenticated={token ? false : true}
               redirectPath={"/login"}
-              children={<RegisterPage></RegisterPage>}
+              children={<RegisterPage />}
             />
           }
-        ></Route>
+        />
+      </Route>
+      {/* Admin */}
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<h1> Dashboard Page</h1>} />
+        <Route path="home" element={<HomePage />} />
+        <Route path="products" element={<ProductsPage />} />
       </Route>
     </>
   )
 );
-
 export default router;

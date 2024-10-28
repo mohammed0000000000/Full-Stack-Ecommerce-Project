@@ -2,6 +2,7 @@ import { Button, Divider, Flex, Image, Stack, Text } from "@chakra-ui/react";
 import { IThumbnail } from "../interfaces";
 import { useDispatch } from "react-redux";
 import { decreaseQuantity, removeFromCart } from "../app/features/cartSlice";
+import { FaTrashAlt } from "react-icons/fa";
 interface IProp {
   id: number;
   title: string;
@@ -44,6 +45,7 @@ const CartDrawerItem = ({ id, thumbnail, title, price, quantity }: IProp) => {
             w="fit-content"
             onClick={removeOneHandler}
           >
+            <FaTrashAlt className="mr-1" />
             Remove One
           </Button>
           <Button
@@ -53,6 +55,7 @@ const CartDrawerItem = ({ id, thumbnail, title, price, quantity }: IProp) => {
             w="fit-content"
             onClick={removeAllHandler}
           >
+            <FaTrashAlt className="mr-1" />
             Remove All
           </Button>
         </Flex>

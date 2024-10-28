@@ -7,6 +7,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  Text,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +19,7 @@ import { AppDispatch } from "../app/store";
 import { clearCart, selectCartItems } from "../app/features/cartSlice";
 import { IProductItem } from "../interfaces";
 import CartDrawerItem from "./CartDrawerItem";
+
 function CartDrawer() {
   const { isOpenCartDrawer } = useSelector(selectGlobal);
   const cartItems: Array<IProductItem> = useSelector(selectCartItems);
@@ -43,10 +45,14 @@ function CartDrawer() {
           <DrawerCloseButton />
           <DrawerHeader>Your Shopping Cart</DrawerHeader>
           <DrawerBody>
-            {cartItems.map((item) => {
-              // console.log(item);
-              return <CartDrawerItem key={item.id} {...item} />;
-            })}
+            {cartItems.length ? (
+              cartItems.map((item) => {
+                // console.log(item);
+                return <CartDrawerItem key={item.id} {...item} />;
+              })
+            ) : (
+              <Text fontSize={"lg"}>Your Cart Is Empty, Add Items</Text>
+            )}
           </DrawerBody>
           <DrawerFooter>
             <Button
@@ -57,7 +63,6 @@ function CartDrawer() {
             >
               Clear All
             </Button>
-            {/* <Button colorScheme="blue">Save</Button> */}
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
