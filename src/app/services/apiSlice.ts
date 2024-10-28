@@ -4,6 +4,8 @@ import { IProduct } from '../../interfaces';
 export const apiSlice = createApi({
   reducerPath: 'api',
   tagTypes: ['Products'],
+  refetchOnReconnect: true, // refetch data when you are offline and be online
+  refetchOnMountOrArgChange: true,
   baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_STRAPI_SERVER_URL}` }),
   endpoints: (builder) => ({
     getDashboardProducts: builder.query<IProduct[], { page: number }>(
@@ -15,6 +17,15 @@ export const apiSlice = createApi({
         }
       }
     ),
+    deleteDashboardProduct: builder.mutation<void, { productId: number }>(
+      {
+        query: ({ productId }) => ({
+          url: `/api/products/${productId}`,
+          method: "DELETE"
+        }),
+
+      }
+    )
   })
 })
-export const { useGetDashboardProductsQuery } = apiSlice;
+export const { useGetDashboardProductsQuery, useDeleteDashboardProductMutation } = apiSlice;
