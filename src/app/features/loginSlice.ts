@@ -5,7 +5,6 @@ import { AxiosError } from "axios";
 import { ICustomAxiosError, transformAxiosError } from "../../helper/handleAxiosError";
 import { createStandaloneToast } from "@chakra-ui/react";
 import CookieService from "../../services/cookieservices";
-import { redirect } from "react-router-dom";
 const { toast } = createStandaloneToast();
 export interface IUserState {
   loading: boolean;

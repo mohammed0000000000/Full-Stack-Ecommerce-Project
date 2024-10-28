@@ -12,6 +12,7 @@ import LoginPage from "../pages/LoginPage";
 import ProductPage from "../pages/Product";
 import ProductsPage from "../pages/Products";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
+import DashboardProducts from "../pages/dashboard/DashboardProducts";
 
 const token = cookieservices.get("jwt");
 
@@ -76,7 +77,7 @@ const router = createBrowserRouter(
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<h1> Dashboard Page</h1>} />
         <Route path="home" element={<HomePage />} />
-        <Route path="products" element={<ProductsPage />} />
+        <Route path="products" element={<DashboardProducts />} />
       </Route>
     </>
   )
