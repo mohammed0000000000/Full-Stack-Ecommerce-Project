@@ -12,11 +12,13 @@ import { useRef } from "react";
 
 interface IProps {
   isOpen: boolean;
-  onClose: () => void;
   title: string;
   description: string;
   cancelTxt: string;
   onTxt: string;
+  onClose: () => void;
+  onOkHandler?: (id: number) => void;
+  isLoading?: boolean;
 }
 const CustomAlertDialog = ({
   isOpen,
@@ -25,6 +27,8 @@ const CustomAlertDialog = ({
   description,
   cancelTxt,
   onTxt,
+  onOkHandler,
+  isLoading,
 }: IProps) => {
   const cancelRef = useRef(null);
 
@@ -47,7 +51,13 @@ const CustomAlertDialog = ({
             <Button ref={cancelRef} onClick={onClose} variant={"outline"}>
               {cancelTxt}
             </Button>
-            <Button colorScheme="red" ml={3} variant={"outline"}>
+            <Button
+              colorScheme="red"
+              ml={3}
+              variant={"outline"}
+              onClick={onOkHandler}
+              isLoading={isLoading}
+            >
               {onTxt}
             </Button>
           </AlertDialogFooter>

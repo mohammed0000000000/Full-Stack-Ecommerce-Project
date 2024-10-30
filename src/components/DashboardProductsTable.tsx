@@ -18,18 +18,31 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import DashboardProductSkeleton from "./skeleteon/DashboardProductSkeleton";
-import { useGetDashboardProductsQuery } from "../app/services/apiSlice";
+import {
+  useDeleteDashboardProductMutation,
+  useGetDashboardProductsQuery,
+} from "../app/services/apiSlice";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteSweep } from "react-icons/md";
 import { BiSolidShow } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import CustomAlertDialog from "./shared/AlertDialog";
+import { useEffect, useState } from "react";
 
 const DashboardProductsTable = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [productId, setProductId] = useState<number>(0);
 
   const { isLoading, data } = useGetDashboardProductsQuery({ page: 1 });
+  const [RTKdistoryProduct, { isLoading: isDestorying, isSuccess }] =
+    useDeleteDashboardProductMutation();
 
+  useEffect(() => {
+    if (isSuccess) {
+      setProductId(0);
+      onClose();
+    }
+  }, [isSuccess]);
   const RenderProductsList = data?.data?.map((product) => {
     const {
       id,
@@ -70,7 +83,10 @@ const DashboardProductsTable = () => {
             <Button
               colorScheme={"red"}
               variant="outline"
-              onClick={() => onOpen()}
+              onClick={() => {
+                setProductId(id);
+                onOpen();
+              }}
             >
               <MdDeleteSweep />
             </Button>
@@ -117,6 +133,8 @@ const DashboardProductsTable = () => {
         description="Your Are Sure To Delete This Product"
         onTxt="Delete"
         cancelTxt="Cancel"
+        onOkHandler={() => RTKdistoryProduct({ productId: productId })}
+        isLoading={isDestorying}
       />
     </>
   );

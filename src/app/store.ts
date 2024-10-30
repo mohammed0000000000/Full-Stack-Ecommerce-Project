@@ -12,7 +12,6 @@ import { apiSlice } from "./services/apiSlice";
 const persistCartConfiguration = {
   key: "cart",
   storage,
-
 }
 const persistedCart = persistReducer(persistCartConfiguration, cartSlice);
 export const store = configureStore({

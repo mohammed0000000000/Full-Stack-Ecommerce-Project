@@ -23,7 +23,6 @@ import CartDrawerItem from "./CartDrawerItem";
 function CartDrawer() {
   const { isOpenCartDrawer } = useSelector(selectGlobal);
   const cartItems: Array<IProductItem> = useSelector(selectCartItems);
-  console.log(cartItems);
   const btnRef = useRef(null);
   const dispatch = useDispatch<AppDispatch>();
   const onClose = () => dispatch(onCloseCartDrawerAction());
