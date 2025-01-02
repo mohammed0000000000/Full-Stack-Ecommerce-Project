@@ -1,31 +1,41 @@
-# React + TypeScript + Vite + Strapi
+# E-Commerce Web App with Admin Dashboard
 
+An e-commerce web application with an integrated admin dashboard, built using **React** and powered by **Chakra UI** for the frontend. The application supports product listing, user management, and order processing.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
 
-Currently, two official plugins are available:
+### User Features
+- **Product Browsing:** View a variety of products with detailed descriptions.
+- **Cart Management:** Add, remove, and modify cart items.
+- **Checkout:** Seamless checkout experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Admin Features
+- **Product Management:** Add, edit, and delete products.
+- **Order Management:** View and process user orders.
+- **User Management:** Manage customer accounts.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technologies Used
 
-- Configure the top-level `parserOptions` property like this:
+### Frontend:
+- **[@chakra-ui/react](https://chakra-ui.com/):** UI components for building modern interfaces.
+- **[@reduxjs/toolkit](https://redux-toolkit.js.org/):** State management library.
+- **[@tanstack/react-query](https://tanstack.com/query/v5):** Data fetching and caching.
+- **[axios](https://axios-http.com/):** HTTP client for API communication.
+- **[react-router-dom](https://reactrouter.com/):** Routing for navigation.
+- **[redux-persist](https://github.com/rt2zz/redux-persist):** Persisting Redux state across sessions.
+- **[framer-motion](https://www.framer.com/motion/):** Animation library for React.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+---
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Contributing
+Contributions are welcome! Please open an issue or submit a pull request for any changes.
+
+---
+
+## Acknowledgments
+- **Chakra UI** for the component library.
+- **React Query** for simplifying data fetching and caching.
+- **Redux Toolkit** for state management.
+
